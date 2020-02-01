@@ -3,7 +3,7 @@ import { withFormik, Form, Field} from 'formik';
 import * as Yup from 'yup';
 import axios from 'axios';
 
-const TheForm = ({values}) => {
+const TheForm = ({values, errors, touched, status}) => {
     return (
         <div>
             <Form>
@@ -15,6 +15,7 @@ const TheForm = ({values}) => {
                     name = "name"
                     id = "name"
                 />
+                {touched.name && errors.name && <p className="errors">{errors.name}</p>}
                 <label htmlFor="email">
                     Email
                 </label>
@@ -23,6 +24,7 @@ const TheForm = ({values}) => {
                     name = "email"
                     id = "email"
                 />
+                {touched.email && errors.email && <p className="errors">{errors.email}</p>}
                 <label htmlFor="password">
                     Password
                 </label>
@@ -43,7 +45,22 @@ const TheForm = ({values}) => {
                 <button type="submit">Submit</button>
             </Form>
         </div>
-    )
-}
+    );
+};
 
-export default TheForm;
+const FormikTheForm = withFormik({
+    mapPropsToValues({name, email, termsOfService}){
+        return {
+            name: name || "",
+            email: email || "",
+            password: "",
+            termsOfService: termsOfService || false
+        }
+    },
+    validationSchema : Yup.object().shape({
+        name: Yup.string().required(),
+        email: Yup.string().required()
+    }),
+})(TheForm);
+
+export default FormikTheForm;
