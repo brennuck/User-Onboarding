@@ -36,11 +36,11 @@ const TheForm = ({values, errors, touched, status}) => {
                     Password
                 </label>
                 <Field
-                    type = "text"
+                    type = "password"
                     name = "password"
                     id = "password"
                 />
-                <label className = "checkmark">
+                <label>
                     Terms of Service
                 </label>
                 <Field
@@ -48,7 +48,6 @@ const TheForm = ({values, errors, touched, status}) => {
                     name = "TermsOfService"
                     checked = {values.termsOfService}
                 />
-                <span className = "checkmark" />
                 <button type="submit">Submit</button>
             </Form>
             {users.map(user => {
